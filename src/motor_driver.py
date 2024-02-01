@@ -1,4 +1,5 @@
 import pyb
+import time
 
 class MotorDriver:
     """! 
@@ -37,3 +38,26 @@ class MotorDriver:
         else:
             self.ch1.pulse_width_percent(0)
             self.ch2.pulse_width_percent(-1*level if level >= -100 else 100)
+            
+if __name__ == '__main__':
+    pinA10 = pyb.Pin(pyb.Pin.board.PA10, pyb.Pin.OUT_PP)
+    pinB4 = pyb.Pin(pyb.Pin.board.PB4, pyb.Pin.OUT_PP) 
+    pinB5 = pyb.Pin(pyb.Pin.board.PB5, pyb.Pin.OUT_PP)
+    
+    tim3 = pyb.Timer(3, freq=20000)
+
+    motor = MotorDriver(pinA10, pinB4, pinB5, tim3)
+    
+    motor.set_duty_cycle(150)
+
+    time.sleep(1)
+    
+    motor.set_duty_cycle(-150)
+
+    time.sleep(1)
+
+    motor.set_duty_cycle(50)
+    
+    time.sleep(1)
+    
+    motor.set_duty_cycle(0)
