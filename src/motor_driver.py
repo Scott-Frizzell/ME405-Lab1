@@ -1,3 +1,8 @@
+"""! 
+@file motor_driver.py
+Runs motor in desired direction at provided speed level.
+"""
+
 import pyb
 import time
 
@@ -10,9 +15,13 @@ class MotorDriver:
         """! 
         Creates a motor driver by initializing GPIO
         pins and turning off the motor for safety. 
-        @param en_pin (There will be several parameters)
+        @param en_pin motor enable pin
+        @param in1pin pin corresponding to timer channel 1 pin
+        @param in2pin pin corresponding to timer channel 2 pin
+        @param timer timer used for PWM
+        @returns MotorDriver
         """
-        print ("Creating a motor driver")
+#       print ("Creating a motor driver")
         
         self.ENA = en_pin
         self.ch1 = timer.channel(1, pyb.Timer.PWM, pin=in1pin)
@@ -25,9 +34,10 @@ class MotorDriver:
         cause torque in one direction, negative values
         in the opposite direction.
         @param level A signed integer holding the duty
-               cycle of the voltage sent to the motor 
+               cycle of the voltage sent to the motor
+        @returns None
         """
-        print (f"Setting duty cycle to {level}")
+#       print (f"Setting duty cycle to {level}")
         if level == 0:
             self.ENA.low()
             return
